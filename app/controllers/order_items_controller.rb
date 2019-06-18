@@ -14,4 +14,21 @@ class OrderItemsController < ApplicationController
           render "new"
         end
       end
+      def edit
+        @order_item = OrderItem.find(params[:id])
+      end
+      def update
+        order_item = OrderItem.find(params[:id])
+        order_item.update(quantity: params[:order_item][:quantity])
+        if @order_item.save
+          redirect_to order_items_path
+          render "order"
+        else
+          render "order"
+        end
+      end
+      def destroy
+        OrderItem.destroy(params[:id])
+        redirect_to order_items_path
+      end
 end
